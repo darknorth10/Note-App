@@ -5,9 +5,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { AppBar } from "@react-native-material/core";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 function Home() {
   return (
-    <HomeScreen />
+    <>
+      <HomeScreen />
+      <StatusBar/>
+    </>
   );
 }
 
