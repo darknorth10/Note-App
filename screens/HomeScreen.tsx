@@ -7,16 +7,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeScreen() {
     const [modalVisible, setModalVisible] = useState(false);
-    const [note, setNote] = useState("")
-
-    const CreateNotes = async () => {
-        const value = await AsyncStorage.getItem('notes')
-        const n = value ? JSON.parse(value) : []
-        n.push(note)
-        await AsyncStorage.setItem('notes', JSON.stringify(n))
-        .then(() => setModalVisible(!modalVisible))
-        setNote('')
-    }
     return(
         <View style={styles.container}>
             <Modal
@@ -32,12 +22,12 @@ export default function HomeScreen() {
             <TouchableOpacity
               onPress={() => setModalVisible(!modalVisible)}
               style={styles.hideModal}>
-                  <Text style={{color:'#08415C'}}>Back</Text>
+                  <Text style={{color:'#08415C', fontSize:16, padding:5}}>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity 
             onPress={() => setModalVisible(true)} 
             style={styles.savebtn}>
-            <Text style={{color:'#08415C'}} onPress={CreateNotes} >Save</Text>
+            <Text style={{color:'#08415C', fontSize:16, padding:5}}>Save</Text>
             </TouchableOpacity>
             <Text style={styles.title}>Title</Text>
             <TextInput 
@@ -47,11 +37,9 @@ export default function HomeScreen() {
             <Text style={styles.title}>Content</Text>
             <TextInput 
                 autoComplete={false}
-                mode="outlined" style={{width:'100%', fontSize:12}}
+                mode="outlined" style={{width:'100%', fontSize:15, padding: 10}}
                 multiline={true} numberOfLines={25}
                 activeOutlineColor='#08415C'/>
-                value = {note}
-                onChangeText = {setNote}
           </View>
         </View>
       </Modal>
@@ -112,6 +100,6 @@ const styles = StyleSheet.create({
         padding:10,
     },
     title: {
-        marginTop:20
+        marginTop: 40
 }
 })
