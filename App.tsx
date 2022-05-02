@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
@@ -7,12 +7,10 @@ import { AppBar } from "@react-native-material/core";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 function Home() {
   return (
-    <>
       <HomeScreen />
-      <StatusBar/>
-    </>
   );
 }
 

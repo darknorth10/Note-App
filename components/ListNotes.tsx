@@ -1,21 +1,24 @@
 import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native'
 import React from 'react'
 
-export default function ListNotes({notes, setNotes}: {notes:any, setNotes:any}) {
+export default function ListNotes({notes, setNotes, handleNoteEditTrigger}: {notes:any, setNotes:any, handleNoteEditTrigger:any}) {
+
   return (
       <View style={styles.container}>
         <FlatList 
             style={styles.container2}
+            showsVerticalScrollIndicator={false}
+            refreshing={true}
             data={notes}
-            renderItem={(data) => {
+            renderItem={({item}) => {
                 return (
-                    <TouchableOpacity style={styles.listItems}>
-                        <Text style={styles.noteDate}>{data.item.date}</Text>
-                        <Text style={styles.noteTitle}>{data.item.title}</Text>
+                    <TouchableOpacity style={styles.listItems} onPress={() => handleNoteEditTrigger(item)}>
+                        <Text style={styles.noteDate}>{item.date}</Text>
+                        <Text style={styles.noteTitle}>{item.title}</Text>
+                        <Text style={styles.noteContent}>{item.content}</Text>
                     </TouchableOpacity>
                 )
             }}
-        
         />
       </View>
   )
@@ -52,7 +55,13 @@ const styles = StyleSheet.create({
     noteTitle: {
         fontSize:20,
         textAlign:'center',
-        padding:5,
+        paddingHorizontal:45,
+        paddingVertical:30,
         color:'#08415C'
+    },
+    noteContent: {
+        fontSize:14,
+        textAlign:'center',
+        paddingHorizontal:40,
     }
 })
