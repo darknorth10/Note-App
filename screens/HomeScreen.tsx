@@ -7,10 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ListNotes from "../components/ListNotes";
 
 
-export default function HomeScreen() {
-    const initialNotes: any[] | (() => any[]) = []
-    //notes usestate
-    const [notes, setNotes] = useState(initialNotes);
+export default function HomeScreen({notes, setNotes}: {notes:any, setNotes:any}) {
 
     //modal usestate
     const [modalVisible, setModalVisible] = useState(false);
@@ -22,7 +19,11 @@ export default function HomeScreen() {
     // adding new notes
     const addNewNote = (note: any) => {
         const newNote = [...notes, note]
-        setNotes(newNote);
+        //async
+        AsyncStorage.setItem("storedNote", JSON.stringify(newNote)).then(() => {
+            setNotes(newNote);
+            setModalVisible(false)
+        }).catch(error => console.log(error));
     }
 
     //closing modal
@@ -43,11 +44,14 @@ export default function HomeScreen() {
     // NOTE EDIT
     const handleNoteEdit = (editedNote: { title?: any; key?: any; content?: any; date?: any; }) => {
         const newNote:any = [...notes];
-        const noteIndex = notes.findIndex((note) => note.key === editedNote.key);
+        const noteIndex = notes.findIndex((note:any) => note.key === editedNote.key);
         newNote.splice(noteIndex, 1, editedNote);
-        setNotes(newNote);
-        setNoteToBeEdit(null);
-        setModalVisible(false);
+        // async
+        AsyncStorage.setItem("storedNote", JSON.stringify(newNote)).then(() => {
+            setNotes(newNote);
+            setNoteToBeEdit(null);
+            setModalVisible(false)
+        }).catch(error => console.log(error));
     }
     //saving note
     const handleSubmit = () => {
@@ -78,9 +82,12 @@ export default function HomeScreen() {
     // Hnadle delete
     const handleDelete = (rowMap: any, rowKey: { key: any; }) => {
         const newNote:any = [...notes];
-        const noteIndex = notes.findIndex((note) => note.key === rowKey.key);
+        const noteIndex = notes.findIndex((note:any) => note.key === rowKey.key);
         newNote.splice(noteIndex, 1);
-        setNotes(newNote);
+
+        AsyncStorage.setItem("storedNote", JSON.stringify(newNote)).then(() => {
+            setNotes(newNote);
+        }).catch(error => console.log(error));
     }
 
     return(

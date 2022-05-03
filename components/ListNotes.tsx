@@ -15,7 +15,6 @@ export default function ListNotes({notes, setNotes, handleNoteEditTrigger, handl
                      onPress={() => handleNoteEditTrigger(item)}>
                         <Text style={styles.noteDate}>{item.date}</Text>
                         <Text style={styles.noteTitle}>{item.title}</Text>
-                        <Text style={styles.noteContent}>{item.content}</Text>
                             <TouchableOpacity style={styles.delBtn} onPress={() => handleDelete(rowMap, item.key)}>
                                 <Text style={styles.delTxt}>Delete</Text>
                             </TouchableOpacity>
@@ -58,15 +57,8 @@ const styles = StyleSheet.create({
     noteTitle: {
         fontSize:20,
         textAlign:'center',
-        paddingTop:25,
-        paddingVertical:20,
+        paddingVertical:40,
         color:'#08415C'
-    },
-    noteContent: {
-        fontSize:14,
-        textAlign:'center',
-        paddingHorizontal:40,
-        marginBottom:40
     },
     delBtn: {
         position:'absolute',
@@ -81,7 +73,6 @@ const styles = StyleSheet.create({
         fontSize:17,
         borderWidth:1,
         borderColor:'#E5E5E5',
-        
     }
 })
 

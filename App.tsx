@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,19 +6,48 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { AppBar } from "@react-native-material/core";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
+import AboutScreen from './screens/AboutScreen';
 
 
 function Home() {
+  const [ready, setReady]:boolean | any = useState()
+
+  const initialNotes: any[] | (() => any[]) = []
+    //notes usestate
+    const [notes, setNotes] = useState(initialNotes);
+
+    // Async
+    const getNotes = async ():Promise<any> => {
+      try {
+        const note = await AsyncStorage.getItem('storedNote')
+        return note != null ? setNotes(JSON.parse(note)) : null;
+      } catch(e) {
+          console.log(e)
+      }
+    }
+    if(!ready) {
+      return (
+        <AppLoading 
+           startAsync={getNotes}
+           onFinish={() => setReady(true)}
+           onError={console.warn}
+         />
+      )
+    }
+
+    // Calls Home screen
   return (
-      <HomeScreen />
+      <HomeScreen
+        notes={notes}
+        setNotes={setNotes}
+      />
   );
 }
 
-function AboutScreen() {
+function About() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
+    <AboutScreen />
   );
 
 }
@@ -26,7 +55,7 @@ function AboutScreen() {
 const Tab = createMaterialBottomTabNavigator();
 
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <NavigationContainer>
       <AppBar title="Notes"
