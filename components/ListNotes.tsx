@@ -1,8 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, Modal } from 'react-native'
+import React, { useState } from 'react'
 
-export default function ListNotes({notes, setNotes, handleNoteEditTrigger}: {notes:any, setNotes:any, handleNoteEditTrigger:any}) {
-
+export default function ListNotes({notes, setNotes, handleNoteEditTrigger, handleDelete}: {notes:any, setNotes:any, handleNoteEditTrigger:any, handleDelete:any}) {
   return (
       <View style={styles.container}>
         <FlatList 
@@ -12,10 +11,14 @@ export default function ListNotes({notes, setNotes, handleNoteEditTrigger}: {not
             data={notes}
             renderItem={({item}) => {
                 return (
-                    <TouchableOpacity style={styles.listItems} onPress={() => handleNoteEditTrigger(item)}>
+                    <TouchableOpacity style={styles.listItems} 
+                     onPress={() => handleNoteEditTrigger(item)}>
                         <Text style={styles.noteDate}>{item.date}</Text>
                         <Text style={styles.noteTitle}>{item.title}</Text>
                         <Text style={styles.noteContent}>{item.content}</Text>
+                            <TouchableOpacity style={styles.delBtn} onPress={() => handleDelete(rowMap, item.key)}>
+                                <Text style={styles.delTxt}>Delete</Text>
+                            </TouchableOpacity>
                     </TouchableOpacity>
                 )
             }}
@@ -55,13 +58,33 @@ const styles = StyleSheet.create({
     noteTitle: {
         fontSize:20,
         textAlign:'center',
-        paddingHorizontal:45,
-        paddingVertical:30,
+        paddingTop:25,
+        paddingVertical:20,
         color:'#08415C'
     },
     noteContent: {
         fontSize:14,
         textAlign:'center',
         paddingHorizontal:40,
+        marginBottom:40
+    },
+    delBtn: {
+        position:'absolute',
+        width:'100%',
+        bottom:0,
+    },
+    delTxt: {
+        backgroundColor:'#A41623',
+        color:'white',
+        textAlign:'center',
+        padding: 5,
+        fontSize:17,
+        borderWidth:1,
+        borderColor:'#E5E5E5',
+        
     }
 })
+
+function rowMap(rowMap: any): void {
+    throw new Error('Function not implemented.')
+}

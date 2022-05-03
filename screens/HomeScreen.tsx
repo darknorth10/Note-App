@@ -8,12 +8,7 @@ import ListNotes from "../components/ListNotes";
 
 
 export default function HomeScreen() {
-    const initialNotes = [{
-        date: "03-05-2022",
-        title: "Sample",
-        key: "1",
-    },
-]
+    const initialNotes: any[] | (() => any[]) = []
     //notes usestate
     const [notes, setNotes] = useState(initialNotes);
 
@@ -37,6 +32,23 @@ export default function HomeScreen() {
         setModalVisible(false)
     }
 
+     const [noteToBeEdited, setNoteToBeEdit]:any = useState(null)
+    // handling edit note trigger
+    const handleNoteEditTrigger = (item: any) => {
+        setNoteToBeEdit(item);
+        setModalVisible(true);
+        setAddNoteTitle(item.title);
+        setAddNoteContent(item.content);
+    }
+    // NOTE EDIT
+    const handleNoteEdit = (editedNote: { title?: any; key?: any; content?: any; date?: any; }) => {
+        const newNote:any = [...notes];
+        const noteIndex = notes.findIndex((note) => note.key === editedNote.key);
+        newNote.splice(noteIndex, 1, editedNote);
+        setNotes(newNote);
+        setNoteToBeEdit(null);
+        setModalVisible(false);
+    }
     //saving note
     const handleSubmit = () => {
         if(!noteToBeEdited) {
@@ -47,48 +59,39 @@ export default function HomeScreen() {
                     content: addNoteContent,
                     key: `${(notes[notes.length-1] && parseInt(notes[notes.length -1].key) + 1) || 1}`
                 });
-                handleCloseModal()
+                handleCloseModal();
+            } else {
+                alert('Fill in some content.')
             }
-            else {
-                alert("Please input some content before saving.")
-            }
-        } else {
+            
+        } else { 
             handleNoteEdit({
                 title: addNoteTitle,
-                date: new Date().toUTCString(),
+                content: addNoteContent,
+                date: noteToBeEdited.date,
+                key: noteToBeEdited.key
             })
-        }
-
-        
-        
+            setAddNoteTitle("")
+            setAddNoteContent("");
+        } 
     }
-
-    const [noteToBeEdited, setNoteToBeEdit] = useState(null)
-    // handling edit note trigger
-    const handleNoteEditTrigger = (notes: any) => {
-        setNoteToBeEdit(notes);
-        setModalVisible(true);
-        setAddNoteTitle(notes.title);
-        setAddNoteContent(notes.content);
-    }
-    // NOTE EDIT
-    const handleNoteEdit = (editedNote: any) => {
+    // Hnadle delete
+    const handleDelete = (rowMap: any, rowKey: { key: any; }) => {
         const newNote:any = [...notes];
-        const noteIndex = notes.findIndex((note) => note.key === editedNote.key);
-        newNote.splice(noteIndex, 1, editedNote);
+        const noteIndex = notes.findIndex((note) => note.key === rowKey.key);
+        newNote.splice(noteIndex, 1);
         setNotes(newNote);
-        setNoteToBeEdit(null);
-        setModalVisible(false);
     }
 
     return(
         <View style={styles.container}>
 
+         {/* Add new note modal */}
          <Modal
             animationType="fade"
             visible={modalVisible}
             onRequestClose={() => {
-          setModalVisible(!modalVisible);
+            setModalVisible(!modalVisible);
         }}
       >
              <View style={styles.container}>
@@ -129,12 +132,15 @@ export default function HomeScreen() {
             </View>
       </Modal>
       
+      {/* Display flatlist */}
       <ListNotes 
         notes={notes}
         setNotes={setNotes}
         handleNoteEditTrigger={handleNoteEditTrigger}
+        handleDelete={handleDelete}
      />
       
+      {/* Floating add note button */}
      <TouchableOpacity style={styles.floatbtn} onPress={() => setModalVisible(!modalVisible)}>
         <Text style={styles.icon}>
             <Icon 
