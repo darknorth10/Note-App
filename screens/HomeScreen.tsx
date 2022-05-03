@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Modal, ToastAndroid } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native';
 import { Icon } from "react-native-elements/dist/icons/Icon";
 import { useState } from 'react';
 import { TextInput } from "react-native-paper";

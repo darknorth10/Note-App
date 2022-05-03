@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 import * as React from 'react';
 
 
@@ -9,6 +9,9 @@ export default function AboutScreen() {
       <View style={styles.abtContainer}>
         <Text style={styles.txt}>This is created by Albus Group</Text>
         <Text style={styles.sy}>School Year 2022</Text>
+        <Image source={require('../assets/logo2.png')}
+            style={styles.logo} 
+        />
         <Text style={styles.text2}>Project for Application Development</Text>
         <Text style={styles.text2}>Created using React Native</Text>
       </View>
@@ -46,5 +49,12 @@ const styles = StyleSheet.create({
       color: 'black',
       padding:5,
       textAlign:'center',
+    },
+    logo: {
+      height: '50%',
+      width: '100%',
+      alignItems: 'center',
+      borderWidth: 1,
+
     }
 })
