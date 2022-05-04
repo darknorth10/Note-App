@@ -1,21 +1,20 @@
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, Modal } from 'react-native'
 import React, { useState } from 'react'
 
-export default function ListNotes({notes, setNotes, handleNoteEditTrigger, handleDelete}: {notes:any, setNotes:any, handleNoteEditTrigger:any, handleDelete:any}) {
+export default function ListNotes({notes, handleNoteEditTrigger, handleDelete}: {notes:any, setNotes:any, handleNoteEditTrigger:any, handleDelete:any}) {
   return (
       <View style={styles.container}>
         <FlatList 
             style={styles.container2}
             showsVerticalScrollIndicator={false}
-            refreshing={true}
             data={notes}
-            renderItem={({item}) => {
+            renderItem={({item, index}) => {
                 return (
                     <TouchableOpacity style={styles.listItems} 
                      onPress={() => handleNoteEditTrigger(item)}>
                         <Text style={styles.noteDate}>{item.date}</Text>
                         <Text style={styles.noteTitle}>{item.title}</Text>
-                            <TouchableOpacity style={styles.delBtn} onPress={() => handleDelete(rowMap, item.key)}>
+                            <TouchableOpacity style={styles.delBtn} onPress={() => handleDelete(index)}>
                                 <Text style={styles.delTxt}>Delete</Text>
                             </TouchableOpacity>
                     </TouchableOpacity>

@@ -4,9 +4,9 @@
     "slug": "Notes-App",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/NOTE.png",
     "splash": {
-      "image": "./assets/icon.png",
+      "image": "./assets/NOTE.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,10 +21,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/NOTE.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.NoteApp.AlbusGroup"
+      "package":"com.NoteApp.Albusgroup"
     },
     "web": {
       "favicon": "./assets/favicon.png"

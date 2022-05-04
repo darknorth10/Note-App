@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
       marginTop:50,
     },
     txt: {
-      fontSize:22,
+      fontSize:18,
       textAlign:'center',
       marginVertical: 10,
       color:'#08415C'
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
       textAlign:'center',
       color: 'gray',
       fontWeight:'bold',
-      marginBottom: 50,
     },
     text2: {
       fontSize: 14,
@@ -53,8 +52,7 @@ const styles = StyleSheet.create({
     logo: {
       height: '50%',
       width: '100%',
-      alignItems: 'center',
-      borderWidth: 1,
-
+      marginVertical:20
+      
     }
 })

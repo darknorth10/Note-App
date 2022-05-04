@@ -79,10 +79,10 @@ export default function HomeScreen({notes, setNotes}: {notes:any, setNotes:any})
             setAddNoteContent("");
         } 
     }
-    // Hnadle delete
-    const handleDelete = (rowMap: any, rowKey: { key: any; }) => {
+    // Handle delete
+    const handleDelete = (index:number) => {
         const newNote:any = [...notes];
-        const noteIndex = notes.findIndex((note:any) => note.key === rowKey.key);
+        const noteIndex = index
         newNote.splice(noteIndex, 1);
 
         AsyncStorage.setItem("storedNote", JSON.stringify(newNote)).then(() => {
@@ -118,8 +118,9 @@ export default function HomeScreen({notes, setNotes}: {notes:any, setNotes:any})
                      <Text style={styles.title}>Title</Text>
                      <TextInput 
                         autoComplete={false}
+                        placeholder='Type title here...'
                         autoCorrect={false}
-                        mode="outlined" style={{width:'90%', height:40}} 
+                        mode="outlined" style={{width:'100%', height:40}} 
                         activeOutlineColor='#08415C'
                         onChangeText={(text) => setAddNoteTitle(text)}
                         value={addNoteTitle}
@@ -128,8 +129,9 @@ export default function HomeScreen({notes, setNotes}: {notes:any, setNotes:any})
                      <Text style={styles.title}>Content</Text>
                      <TextInput 
                         autoComplete={false}
+                        placeholder='Type content here...'
                         mode="outlined" style={{width:'100%', fontSize:15, padding: 10}}
-                        multiline={true} numberOfLines={25}
+                        multiline={true} numberOfLines={20}
                         activeOutlineColor='#08415C'
                         onChangeText={(text) => setAddNoteContent(text)}
                         value={addNoteContent}
